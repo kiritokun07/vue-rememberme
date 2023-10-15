@@ -24,6 +24,12 @@ export default {
       selectedTab: 'stored-resource',
       storedResources: [
         {
+          id: 'baidu',
+          title: 'Baidu',
+          description: '百度',
+          link: 'https://www.baidu.com'
+        },
+        {
           id: 'official-guide',
           title: 'Official Guide',
           description: 'The official Vue.js ducumentation.',
@@ -40,7 +46,8 @@ export default {
   },
   provide() {
     return {
-      resources: this.storedResources
+      resources: this.storedResources,
+      addResource: this.addResource,
     };
   },
   computed: {
@@ -54,7 +61,18 @@ export default {
   methods: {
     setSelectedTab(tab) {
       this.selectedTab = tab;
-    }
+    },
+    addResource(title, description, url) {
+      const newResource = {
+        id: new Date().toISOString(),
+        title: title,
+        description: description,
+        link: url,
+      };
+      //在数组的开头加入
+      this.storedResources.unshift(newResource);
+      this.selectedTab = 'stored-resource';
+    },
   }
 }
 </script>
